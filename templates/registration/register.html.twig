@@ -1,0 +1,195 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+<div class="register-container">
+    <form method="post" class="register-form">
+        <h1>Register</h1>
+
+        {% for flash_error in app.flashes('error') %}
+            <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+        {% endfor %}
+
+        {% for flash_success in app.flashes('success') %}
+            <div class="alert alert-success" role="alert">{{ flash_success }}</div>
+        {% endfor %}
+
+        {{ form_errors(registrationForm) }}
+
+        <div class="form-group">
+            {{ form_label(registrationForm.email) }}
+            {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.email) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(registrationForm.firstName) }}
+            {{ form_widget(registrationForm.firstName, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.firstName) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(registrationForm.lastName) }}
+            {{ form_widget(registrationForm.lastName, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.lastName) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(registrationForm.password) }}
+            {{ form_widget(registrationForm.password, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(registrationForm.password) }}
+        </div>
+
+        {{ form_rest(registrationForm) }}
+
+        <button class="btn btn-primary" type="submit">Register</button>
+
+        <div class="divider">
+            <span>or</span>
+        </div>
+
+        <button type="button" class="btn-google">
+            <img src="{{ asset('images/search.png') }}" alt="Google Icon" class="google-icon">
+            Continue with Google
+        </button>
+        
+        <div class="form-footer">
+            <p>Already have an account? <a href="{{ path('app_login') }}">Login here</a></p>
+        </div>
+    </form>
+</div>
+
+<style>
+    .register-container {
+        min-height: calc(100vh - 5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .register-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        width: 100%;
+        max-width: 400px;
+        margin-top: 70px;
+    }
+
+    .register-form h1 {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #555;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: #FF424D;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #ff2c39;
+    }
+
+    .form-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+    .form-footer a {
+        color: #FF424D;
+        text-decoration: none;
+    }
+
+    .form-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .btn-google {
+        width: 100%;
+        padding: 0.75rem;
+        background-color: white;
+        color: #757575;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1.5rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-google:hover {
+        background-color: #f5f5f5;
+    }
+
+    .google-icon {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+    }
+
+    .divider {
+        text-align: center;
+        margin-top: 1.5rem;
+        position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 45%;
+        height: 1px;
+        background-color: #ddd;
+    }
+
+    .divider::before {
+        left: 0;
+    }
+
+    .divider::after {
+        right: 0;
+    }
+
+    .divider span {
+        background-color: white;
+        padding: 0 10px;
+        color: #757575;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+

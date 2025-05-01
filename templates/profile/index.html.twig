@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block body %}
+<div class="profile-container">
+    <div class="profile-card">
+        <h1>My Profile</h1>
+        
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+
+        <div class="profile-info">
+            <div class="info-group">
+                <label>First Name:</label>
+                <span>{{ user.firstName }}</span>
+            </div>
+            
+            <div class="info-group">
+                <label>Last Name:</label>
+                <span>{{ user.lastName }}</span>
+            </div>
+            
+            <div class="info-group">
+                <label>Email:</label>
+                <span>{{ user.email }}</span>
+            </div>
+        </div>
+
+        <div class="profile-actions">
+            <a href="{{ path('app_home') }}" class="btn btn-secondary">Back to Home</a>
+            <a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .profile-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 8rem 1rem;
+    }
+
+    .profile-card {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+    }
+
+    .profile-card h1 {
+        color: #333;
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .profile-info {
+        margin-bottom: 2rem;
+    }
+
+    .info-group {
+        margin-bottom: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 4px;
+    }
+
+    .info-group label {
+        font-weight: bold;
+        color: #666;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-group span {
+        color: #333;
+        font-size: 1.1rem;
+    }
+
+    .profile-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        color: white;
+    }
+</style>
+{% endblock %}

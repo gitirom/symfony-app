@@ -3,18 +3,635 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background:rgb(255, 0, 0); padding: 2px 6px; }
-</style>
+    <style>
+        .home-container {
+            display: flex;
+            flex-direction: column;
+        }
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        .header-container {
+            text-align: center;
+            background-color: #cccacb;
+            margin: 0;
+            padding: 0 200px;
+            min-height: calc(100vh - 70px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 100px;
+            position: relative;
+            padding-bottom: 50px;
+        }
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/dell/OneDrive/Documents/full-stack/symfony/my_project/src/Controller/HomeController.php'|file_link(0) }}">src/Controller/HomeController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/dell/OneDrive/Documents/full-stack/symfony/my_project/templates/home/index.html.twig'|file_link(0) }}">templates/home/index.html.twig</a></code></li>
-    </ul>
-</div>
+        .header-left {
+            flex: 1;
+            text-align: left;
+            max-width: 500px;
+        }
+
+        .header-left h1 {
+            font-size: 3.5rem;
+            margin: 0;
+            color: #FF424D;
+            line-height: 1.2;
+        }
+
+        #second-line{
+            color: #333;
+        }
+
+        .header-left p {
+            font-size: 1.2rem;
+            color: #666;
+            margin: 2rem 0;
+            line-height: 1.6;
+        }
+
+        .shop-now-btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            background-color: #FF424D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .shop-now-btn:hover {
+            background-color:rgb(255, 53, 63);
+        }
+
+        .header-right {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 500px; 
+            height: 500px; 
+        }
+
+        .header-right img {
+            width: 100%;
+            height: 100%;
+            
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            background-color: #fff;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .dot.active {
+            background-color: #FF424D;
+            transform: scale(1.2);
+        }
+
+        .shop-withus-section {
+            background-color: white;
+            padding: 4rem 2rem;
+            color: black; 
+            text-align: center;
+        }
+
+        .shop-withus-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            color: black; 
+        }
+
+        .shop-withus-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #FF424D;
+        }
+
+        .shop-withus-cards {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .shop-withus-card {
+            flex: 1;
+            min-width: 350px;
+            max-width: 400px;
+            padding: 3rem;
+            background-color: #04212f; 
+            border-radius: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .shop-withus-card:hover {
+            transform: translateY(-10px);
+            background-color: #053449; 
+        }
+
+        .shop-withus-card i {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .shop-withus-card .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .shop-withus-card .card-text {
+            color: #ccc;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .newArrivals-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 200px;
+            background-color: #cccacb;
+            gap: 50px;
+        }
+
+        .newArrivals-left {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 650px;
+        }
+
+        .newArrivals-left img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .newArrivals-right {
+            flex: 1;
+            max-width: 500px;
+            padding: 2rem;
+        }
+
+        .newArrivals-right h1 {
+            font-size: 2.7rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+            position: relative;
+        }
+
+        .newArrivals-right h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #FF424D;
+        }
+
+        .newArrivals-right p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .newArrivals-right button {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            background-color: #FF424D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .newArrivals-right button:hover {
+            background-color: rgb(255, 53, 63);
+        }
+
+        .products-section {
+            background-color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .products-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .products-section h1 span {
+            color: #FF424D;
+        }
+
+        .products-section h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #FF424D;
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .product-content {
+            background-color: #f5f6f7;
+            border-radius: 10px;
+            padding: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-content img {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background-color: white;
+            padding: 0.5rem;
+        }
+
+        .prod-details {
+            padding: 1rem;
+            text-align: left;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .prod-details h5 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .prod-details p {
+            font-size: 1.1rem;
+            color: #FF424D;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .view-product-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #FF424D;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .view-product-btn:hover {
+            background-color: #ff2c39;
+            color: white;
+        }
+
+        .no-products-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 2rem;
+            background-color: #f5f6f7;
+            border-radius: 10px;
+        }
+
+        .no-products-message p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding: 2rem;
+                gap: 50px;
+                padding-bottom: 60px;
+            }
+
+            .header-left {
+                text-align: center;
+            }
+
+            .header-left h1 {
+                font-size: 2.5rem;
+            }
+
+            .shop-withus-title {
+                font-size: 2rem;
+            }
+
+            .shop-withus-cards {
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+            }
+
+            .shop-withus-card {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .newArrivals-section {
+                flex-direction: column;
+                padding: 2rem;
+                gap: 2rem;
+            }
+
+            .newArrivals-right {
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .newArrivals-right h1:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .newArrivals-left {
+                width: 100%;
+            }
+
+           .products-section {
+            background-color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .products-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+            position: relative;
+        }
+
+        .products-section h1 span {
+            color: #FF424D;
+        }
+
+        .products-section h1:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background-color: #FF424D;
+        }
+
+        .products-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            
+        }
+
+        .product-content {
+            background-color: #f5f6f7;
+            border-radius: 10px;
+            padding: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer !impor;
+        }
+
+        .product-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            
+        }
+
+        .product-content img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            
+        }
+
+        .prod-details {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .prod-details h5 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .prod-details p {
+            font-size: 1.1rem;
+            color: #FF424D;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .products-section {
+                padding: 2rem 1rem;
+            }
+
+            .products-container {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .product-content img {
+                height: 200px;
+            }
+
+            .products-section h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+
+    <div class="home-container">
+        <div class="header-container">
+            <div class="header-left">
+                <h1>Sale 20% off</h1>
+                <h1 id="second-line">On Everything</h1>
+                <p>Discover our latest collection of premium clothing and accessories. 
+                   Limited time offer with free shipping on all orders above $50.</p>
+                <button class="shop-now-btn">Shop Now</button>
+            </div>
+            <div class="header-right">
+                <img src="{{ asset('images/front1.png') }}" alt="Fashion Collection">
+            </div>
+            <div class="slider-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <div class="shop-withus-section">
+            <h1 class="shop-withus-title">Why Shop With Us</h1>
+            <div class="shop-withus-cards">
+                <div class="shop-withus-card">
+                    <i class="fas fa-truck fa-3x"></i>
+                    <h5 class="card-title">Free Delivery</h5>
+                    <p class="card-text">On all orders above $50</p>
+                </div>
+                <div class="shop-withus-card">
+                    <i class="fas fa-shipping-fast fa-3x"></i>
+                    <h5 class="card-title">Free Shipping</h5>
+                    <p class="card-text">On all orders above $50</p>
+                </div>
+                <div class="shop-withus-card">
+                    <i class="fas fa-medal fa-3x"></i>
+                    <h5 class="card-title">Best Quality</h5>
+                    <p class="card-text">On all orders above $50</p>
+                </div>
+            </div>
+        </div>
+        <div class="newArrivals-section">
+            <div class="newArrivals-left">
+                <img src="{{ asset('images/front4.png') }}" alt="New Arrivals Collection">
+            </div>
+            <div class="newArrivals-right">
+                <h1>#New Arrivals</h1>
+                <p>Discover our latest collection featuring trendy designs and premium quality materials. Stay ahead of fashion with our newest releases.</p>
+                <button>Shop Now</button>
+            </div>
+        </div>
+        <div class="products-section">
+            <h1>Our <span>Products</span></h1>
+            <div class="products-container">
+                {% for product in products %}
+                    <div class="product-content">
+                        <img src="{{ asset('uploads/products/' ~ product.image) }}" alt="{{ product.name }}">
+                        <div class="prod-details">
+                            <h5>{{ product.name }}</h5>
+                            <p>${{ product.price }}</p>
+                            <a href="{{ path('products_show', {id: product.id}) }}" class="view-product-btn">View Details</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="no-products-message">
+                        <p>No products available at the moment.</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        const dots = document.querySelectorAll('.dot');
+        const slides = [
+            {
+                title: ['Sale 20% off', 'On Everything'],
+                description: 'Discover our latest collection of premium clothing and accessories. Limited time offer with free shipping on all orders above $50.',
+                image: '{{ asset('images/front1.png') }}'
+            },
+            {
+                title: ['New Arrivals', 'Spring Collection'],
+                description: 'Experience the freshness of spring with our new collection. Featuring lightweight fabrics and vibrant colors.',
+                image: '{{ asset('images/front2.png') }}'
+            },
+            {
+                title: ['Premium Quality', 'Best Prices'],
+                description: 'Shop our premium quality products at the best prices. Satisfaction guaranteed with our 30-day return policy.',
+                image: '{{ asset('images/fron3.png') }}'
+            }
+        ];
+
+        let currentSlide = 0;
+
+        function updateSlide(index) {
+            const headerLeft = document.querySelector('.header-left');
+            const headerRight = document.querySelector('.header-right img');
+            
+            headerLeft.innerHTML = `
+                <h1>${slides[index].title[0]}</h1>
+                <h1 id="second-line">${slides[index].title[1]}</h1>
+                <p>${slides[index].description}</p>
+                <button class="shop-now-btn">Shop Now</button>
+            `;
+            
+            headerRight.src = slides[index].image;
+
+            dots.forEach(dot => dot.classList.remove('active'));
+            dots[index].classList.add('active');
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlide(currentSlide);
+            });
+        });
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide(currentSlide);
+        }, 5000);
+    </script>
 {% endblock %}
+
+
+
+
+
+
+
+
+
